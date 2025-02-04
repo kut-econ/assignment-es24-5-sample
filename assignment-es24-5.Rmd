@@ -23,10 +23,33 @@ A) $p_0=1$、$D=0.5$とする。$m=0.05, 0.055, 0.06, 0.065$の4通りの移住�
 
 ```{r assignment-5-A}
 # ここにコードを書く
+gn <- 100
+m <- c(0.05,0.055,0.06,0.065)
+D <- 0.5
+p <- matrix(nrow=length(m),ncol=gn+1)
+p[,1] <- 1
+for(t in 1:gn) {
+  p[,t+1] <- (1-m)*(p[,t] + D*p[,t]*(1-p[,t])*(2*p[,t]-1))
+}
+for(i in 1:length(m)){
+  plot(0:gn,p[i,],xlim=c(0,gn),ylim=c(0,1),col=i,type='l',
+       xlab='Generation',ylab='Frequency')
+  par(new=T)
+}
 ```
 
 B) 引き続き$p_0=1$、$D=0.5$とし、横軸$m$、縦軸$p_{100}$のグラフを描画するコードを書きなさい。ただし$0 \le m \le 0.1$とする。このような図を分岐図(bifurcation diagram)と呼ぶ。
 
 ```{r assignment-5-B}
 # ここにコードを書く
+gn <- 100
+m <- seq(0,0.1,0.0001)
+D <- 0.5
+p <- matrix(nrow=length(m),ncol=gn+1)
+p[,1] <- 1
+for(t in 1:gn) {
+  p[,t+1] <- (1-m)*(p[,t] + D*p[,t]*(1-p[,t])*(2*p[,t]-1))
+}
+plot(m,p[,gn+1],xlim=c(0,m[length(m)]),ylim=c(0,1),type='l',
+     xlab='Migration rate',ylab='Frequency at t=100')
 ```
